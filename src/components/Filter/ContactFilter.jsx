@@ -1,6 +1,8 @@
-import s from "./ContactFilter.module.scss";
+import s from './ContactFilter.module.scss';
+import {connect} from 'react-redux';
+import {filterContacts} from '../../redux/phonebook/actions';
 
-export default function ContactFilter({ filterValue, handlerFindContact }) {
+function ContactFilter({findContact}) {
   return (
     <label className={s.label}>
       Find contact by name
@@ -8,9 +10,12 @@ export default function ContactFilter({ filterValue, handlerFindContact }) {
         className={s.input}
         name="find"
         title="Введите имя или название контакта"
-        value={filterValue}
-        onChange={handlerFindContact}
+        onChange={e => findContact(e.target.value)}
       />
     </label>
   );
 }
+const mapDispatchToProps = dispatch => ({
+  findContact: name => dispatch(filterContacts(name)),
+});
+export default connect(null, mapDispatchToProps)(ContactFilter);

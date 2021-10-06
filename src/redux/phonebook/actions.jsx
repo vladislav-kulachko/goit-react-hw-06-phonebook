@@ -10,3 +10,7 @@ export const delContact = id => ({
   type: types.DEL,
   payload: id,
 });
+export const filterContacts = filter => ({
+  type: types.FILTER,
+  payload: filter,
+});

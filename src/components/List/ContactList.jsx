@@ -1,7 +1,8 @@
 import {connect} from 'react-redux';
+import {delContact} from '../../redux/phonebook/actions';
 import s from './ContactList.module.scss';
 
-function ContactList({contacts, filter, handlerDelContact}) {
+function ContactList({contacts, filter, delContact}) {
   return (
     <ul className={s.list}>
       {contacts.length === 0 ? (
@@ -18,7 +19,7 @@ function ContactList({contacts, filter, handlerDelContact}) {
                 className={s.button}
                 id={id}
                 type="button"
-                onClick={handlerDelContact}
+                onClick={e => delContact(e.target.id)}
               >
                 Delete
               </button>
@@ -28,6 +29,11 @@ function ContactList({contacts, filter, handlerDelContact}) {
     </ul>
   );
 }
-const mapStateToProps = state => ({contacts: state.contacts.items});
-const mapDispatchToProps = dispatch => ({});
+const mapStateToProps = state => ({
+  contacts: state.contacts.items,
+  filter: state.contacts.filter,
+});
+const mapDispatchToProps = dispatch => ({
+  delContact: id => dispatch(delContact(id)),
+});
 export default connect(mapStateToProps, mapDispatchToProps)(ContactList);

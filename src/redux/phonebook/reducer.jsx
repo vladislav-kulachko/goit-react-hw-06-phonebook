@@ -8,7 +8,7 @@ import {combineReducers} from 'redux';
 //   }
 // }
 
-const item = (state = [], {type, payload}) => {
+const items = (state = [], {type, payload}) => {
   switch (type) {
     case types.ADD:
       if (state.find(contact => contact.number === payload.number)) {
@@ -24,9 +24,16 @@ const item = (state = [], {type, payload}) => {
   }
 };
 
-const filter = (state = '', {type, payload}) => state;
+const filter = (state = '', {type, payload}) => {
+  switch (type) {
+    case types.FILTER:
+      return payload;
+    default:
+      return state;
+  }
+};
 
 export const contacts = combineReducers({
-  item: item,
+  items: items,
   filter: filter,
 });
