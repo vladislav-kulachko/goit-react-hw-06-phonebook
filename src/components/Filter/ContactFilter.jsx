@@ -10,12 +10,12 @@ function ContactFilter({findContact}) {
         className={s.input}
         name="find"
         title="Введите имя или название контакта"
-        onChange={e => findContact(e.target.value)}
+        onChange={findContact}
       />
     </label>
   );
 }
 const mapDispatchToProps = dispatch => ({
-  findContact: name => dispatch(filterContacts(name)),
+  findContact: e => dispatch(filterContacts(e.target.value)),
 });
 export default connect(null, mapDispatchToProps)(ContactFilter);

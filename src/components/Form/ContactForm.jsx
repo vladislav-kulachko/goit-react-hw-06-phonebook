@@ -3,7 +3,7 @@ import {useState} from 'react';
 import s from './ContactForm.module.scss';
 import {addContact} from '../../redux/phonebook/actions';
 
-function ContactForm({onSubmit}) {
+function ContactForm({onSubmit, contacts}) {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
@@ -19,11 +19,19 @@ function ContactForm({onSubmit}) {
     }
   };
   const handlerSubmitFormClick = e => {
+    e.preventDefault();
     if (name !== '' && number !== '') {
-      e.preventDefault();
-      onSubmit(name, number);
-      setName('');
-      setNumber('');
+      if (contacts.find(contact => contact.number === number)) {
+        alert(`Этот номер ${number} уже есть в списке`);
+        return;
+      } else if (contacts.find(contact => contact.name === name)) {
+        alert(`Это имя ${name} уже есть в списке`);
+        return;
+      } else {
+        onSubmit(name, number);
+        setName('');
+        setNumber('');
+      }
     }
   };
 
@@ -61,8 +69,12 @@ function ContactForm({onSubmit}) {
     </form>
   );
 }
+const mapStateToProps = ({contacts: {items}}) => ({
+  contacts: items,
+});
+
 const mapDispatchToProps = dispatch => ({
   onSubmit: (name, number) => dispatch(addContact(name, number)),
 });
 
-export default connect(null, mapDispatchToProps)(ContactForm);
+export default connect(mapStateToProps, mapDispatchToProps)(ContactForm);
