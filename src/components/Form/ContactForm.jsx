@@ -1,11 +1,15 @@
-import {connect} from 'react-redux';
+// import {connect} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import {useState} from 'react';
 import s from './ContactForm.module.scss';
 import {addContact} from '../../redux/phonebook/actions';
 
-function ContactForm({onSubmit, contacts}) {
+export default function ContactForm() {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
+
+  const contacts = useSelector(state => state.contacts.items);
+  const dispatch = useDispatch();
 
   const handlerContactAdd = e => {
     switch (e.target.name) {
@@ -28,7 +32,7 @@ function ContactForm({onSubmit, contacts}) {
         alert(`Это имя ${name} уже есть в списке`);
         return;
       } else {
-        onSubmit(name, number);
+        dispatch(addContact(name, number));
         setName('');
         setNumber('');
       }
@@ -69,12 +73,12 @@ function ContactForm({onSubmit, contacts}) {
     </form>
   );
 }
-const mapStateToProps = ({contacts: {items}}) => ({
-  contacts: items,
-});
+// const mapStateToProps = ({contacts: {items}}) => ({
+//   contacts: items,
+// });
 
-const mapDispatchToProps = dispatch => ({
-  onSubmit: (name, number) => dispatch(addContact(name, number)),
-});
+// const mapDispatchToProps = dispatch => ({
+//   onSubmit: (name, number) => dispatch(addContact(name, number)),
+// });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ContactForm);
+// export default connect(mapStateToProps, mapDispatchToProps)(ContactForm);

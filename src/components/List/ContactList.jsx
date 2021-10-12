@@ -1,8 +1,13 @@
-import {connect} from 'react-redux';
+// import {connect} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {delContact} from '../../redux/phonebook/actions';
 import s from './ContactList.module.scss';
 
-function ContactList({filteredContacts, delContact}) {
+export default function ContactList() {
+  const filteredContacts = useSelector(({contacts: {items, filter}}) =>
+    items.filter(({name}) => name.toLowerCase().search(filter) !== -1),
+  );
+  const dispatch = useDispatch();
   return (
     <ul className={s.list}>
       {filteredContacts.length === 0 ? (
@@ -17,7 +22,7 @@ function ContactList({filteredContacts, delContact}) {
               className={s.button}
               id={id}
               type="button"
-              onClick={delContact}
+              onClick={e => dispatch(delContact(e.target.id))}
             >
               Delete
             </button>
@@ -27,12 +32,12 @@ function ContactList({filteredContacts, delContact}) {
     </ul>
   );
 }
-const mapStateToProps = ({contacts: {items, filter}}) => ({
-  filteredContacts: items.filter(
-    ({name}) => name.toLowerCase().search(filter) !== -1,
-  ),
-});
-const mapDispatchToProps = dispatch => ({
-  delContact: e => dispatch(delContact(e.target.id)),
-});
-export default connect(mapStateToProps, mapDispatchToProps)(ContactList);
+// const mapStateToProps = ({contacts: {items, filter}}) => ({
+//   filteredContacts: items.filter(
+//     ({name}) => name.toLowerCase().search(filter) !== -1,
+//   ),
+// });
+// const mapDispatchToProps = dispatch => ({
+//   delContact: e => dispatch(delContact(e.target.id)),
+// });
+// export default connect(mapStateToProps, mapDispatchToProps)(ContactList);

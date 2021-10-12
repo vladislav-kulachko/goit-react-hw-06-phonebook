@@ -1,7 +1,7 @@
 // import types from './types';
 import {combineReducers} from 'redux';
 import {createReducer} from '@reduxjs/toolkit';
-import {addContact, delContact, filterContacts} from './actions';
+import {addContact, delContact, filterValue} from './actions';
 
 // {
 //   contacts: {
@@ -35,7 +35,7 @@ const items = createReducer([], {
 //   }
 // };
 const filter = createReducer('', {
-  [filterContacts]: (state, {payload}) => payload,
+  [filterValue]: (state, {payload}) => payload,
 });
 
 export const contacts = combineReducers({

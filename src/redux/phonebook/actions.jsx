@@ -16,7 +16,7 @@ export const delContact = createAction('phonebook/delete');
 //   payload: id,
 // });
 
-export const filterContacts = createAction('phonebook/changeFilter');
+export const filterValue = createAction('phonebook/changeFilter');
 // export const filterContacts = filter => ({
 //   type: types.FILTER,
 //   payload: filter,
